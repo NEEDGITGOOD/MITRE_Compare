@@ -12,6 +12,10 @@ This Python script is designed to facilitate the interactive selection and analy
 - Utilization of Colorama for enhanced readability, with specific colors highlighting crucial information, facilitating an intuitive understanding of complex data.
 - Option for users to delve into detailed overviews, including specific detection scenarios and protection test results, for an in-depth analysis of each vendor's strengths and weaknesses against specfic steps/scenarios.
 
+## Preview
+
+![plot](./preview.png)
+
 ## Prerequisites
 Ensure you have the following installed to use this script:
 - Python 3.x
