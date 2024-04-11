@@ -3,111 +3,71 @@ import os
 import colorama
 from colorama import init, Fore, Back, Style
 import time
+import sys
 
-#Initializie Colorama and set reset
+# Initialize Colorama and set reset
 init(autoreset=True)
 
-# Get the Current Folder/Path
-absolute_path = os.path.dirname(os.path.abspath(__file__))
+# Function to clear the screen
+def clear_screen():
+    if os.name == 'nt': 
+        os.system('cls')
+    else:  # for Unix & MAC
+        os.system('clear')
 
-# Choose File
-print("1. Malwarebytes")
-print("2. Cynet")
-print("3. Deepinstinct")
-print("4. Mcafee")
-print("5. Sophos")
-print("6. Symantec")
-print("7. Microsoft")
-print("8. Elastic")
-print("9. ESET")
-print("10. Palo Alto Networks")
-print("11. Uptycs")
-print("12. Qualys")
-print("13. Rapid7")
-print("14. VMware")
-print("15. Withsecure")
-print("16. IBM Security")
-print("17. Cycraft")
-print("18. Cisco")
-print("19. Bitdefender")
-print("20. Ahnlab")
-print("21. Fire Eye")
-print("22. Crowdstrike")
-print("23. Cyberreason")
-print("24. Cyclance")
-print("25. Fidelis")
-print("26. Fortinet")
-print("27. Sentinel One")
-print("28. Somma")
-print("29. Trendmicro")
-print("30. Checkpoint")
+# Get the Current Folder/Path
+script_dir = os.path.dirname(__file__)
+
+# Map of user input to file names
+file_map = {
+    "1": "malwarebytes.json",
+    "2": "cynet.json",
+    "3": "deepinstinct.json",
+    "4": "mcafee.json",
+    "5": "sophos.json",
+    "6": "Symantec.json",
+    "7": "microsoft.json",
+    "8": "elastic.json",
+    "9": "eset.json",
+    "10": "paloaltonetworks.json",
+    "11": "uptycs.json",
+    "12": "qualys.json",
+    "13": "rapid7.json",
+    "14": "vmware.json",
+    "15": "withsecure.json",
+    "16": "ibmsecurity.json",
+    "17": "cycraft.json",
+    "18": "cisco.json",
+    "19": "bitdefender.json",
+    "20": "ahnlab.json",
+    "21": "fireeye.json",
+    "22": "crowdstrike.json",
+    "23": "cyberreason.json",
+    "24": "cylance.json",
+    "25": "fidelis.json",
+    "26": "fortinet.json",
+    "27": "sentinelone.json",
+    "28": "somma.json",
+    "29": "trendmicro.json",
+    "30": "checkpoint.json",
+}
+
+# Display options for the user
+for key, value in file_map.items():
+    print(f"{key}. {value.split('.')[0]}")
+
 print(Fore.RED + "Which File?")
 user_vendor_input = input("")
 
-# Define User based input to the file
-if user_vendor_input == "1":
-    imported_file = "json\\malwarebytes.json"
-if user_vendor_input == "2":
-    imported_file = "json\\cynet.json"
-if user_vendor_input == "3":
-    imported_file = "json\\deepinstinct.json"
-if user_vendor_input == "4":
-    imported_file = "json\\mcafee.json"
-if user_vendor_input == "5":
-    imported_file = "json\\sophos.json"
-if user_vendor_input == "6":
-    imported_file = "json\\Symantec.json"
-if user_vendor_input == "7":
-    imported_file = "json\\microsoft.json"
-if user_vendor_input == "8":
-    imported_file = "json\\elastic.json"
-if user_vendor_input == "9":
-    imported_file = "json\\eset.json"
-if user_vendor_input == "10":
-    imported_file = "json\\paloaltonetworks.json"
-if user_vendor_input == "11":
-    imported_file = "json\\uptycs.json"
-if user_vendor_input == "12":
-    imported_file = "json\\qualys.json"
-if user_vendor_input == "13":
-    imported_file = "json\\rapid7.json"
-if user_vendor_input == "14":
-    imported_file = "json\\vmware.json"
-if user_vendor_input == "15":
-    imported_file = "json\\withsecure.json"
-if user_vendor_input == "16":
-    imported_file = "json\\ibmsecurity.json"
-if user_vendor_input == "17":
-    imported_file = "json\\cycraft.json"
-if user_vendor_input == "18":
-    imported_file = "json\\cisco.json"
-if user_vendor_input == "19":
-    imported_file = "json\\bitdefender.json"
-if user_vendor_input == "20":
-    imported_file = "json\\ahnlab.json"
-if user_vendor_input == "21":
-    imported_file = "json\\fireeye.json"
-if user_vendor_input == "22":
-    imported_file = "json\\crowdstrike.json"
-if user_vendor_input == "23":
-    imported_file = "json\\cyberreason.json"
-if user_vendor_input == "24":
-    imported_file = "json\\cylance.json"
-if user_vendor_input == "25":
-    imported_file = "json\\fidelis.json"
-if user_vendor_input == "26":
-    imported_file = "json\\fortinet.json"
-if user_vendor_input == "27":
-    imported_file = "json\\sentinelone.json"
-if user_vendor_input == "28":
-    imported_file = "json\\somma.json"
-if user_vendor_input == "29":
-    imported_file = "json\\trendmicro.json"    
-if user_vendor_input == "30":
-    imported_file = "json\\checkpoint.json"
+# Check if the user input is in the file_map
+if user_vendor_input in file_map:
+    imported_file = os.path.join("JSON", file_map[user_vendor_input])
+else:
+    print(Fore.RED + "Invalid selection.")
+    sys.exit(1)
 
-# Get the Full OS Path
-full_path = os.path.join(absolute_path, imported_file)
+# Get the Full Path
+full_path = os.path.join(script_dir, imported_file)
 
 # Open the JSON file
 with open(full_path, 'r') as imported_json:
@@ -121,9 +81,6 @@ current_year = data["Adversaries"][0]["Evaluation_Year"]
 steps_data_scenario1 = data["Adversaries"][0]["Detections_By_Step"]["Scenario_1"]["Steps"]
 steps_data_scenario2 = data["Adversaries"][0]["Detections_By_Step"]["Scenario_2"]["Steps"]
 protection_tests = data["Adversaries"][0]["Protections"]["Protection_Tests"]
-
-# Clear the Screen
-os.system('cls')
 
 # Display the Participant and current year
 print(Fore.BLUE + "")
@@ -140,9 +97,7 @@ print("Visibility Coverage: " + data["Adversaries"][0]["Aggregate_Data"]["Aggreg
 print("")
 ask_user_overview = input(Fore.RED + "Show Overview? (Y/N)") 
 if ask_user_overview == "Y":
-
-    os.system('cls')
-
+    clear_screen()
     time.sleep(0.1)
           
     print(Fore.GREEN + "Category 1: The Detection is a Technique" )     
@@ -171,10 +126,14 @@ if ask_user_overview == "Y":
 # Ask for Steps
 ask_user_steps = input(Fore.RED + "Show steps? (Y/N)")
 if ask_user_steps == "Y":
-
-    os.system('cls')
-
+    clear_screen()
     ask_user_steps_choice = input(Fore.RED + "Which Scenario? (1 or 2), press 3 for the Protection Test")
+
+else:
+    clear_screen()
+    print(f" {ask_user_steps} is not an Valid Option. Exiting...")
+    sys.exit(1)
+
 
 # Set Detection to 0
 detection_technique = 0
@@ -191,6 +150,7 @@ protection_na = 0
 
 # If user presses "1" continue with Scenario 1
 if ask_user_steps_choice == "1":
+    clear_screen()
     print("Displaying Scenario 1")
 
     for step in steps_data_scenario1:
@@ -228,8 +188,23 @@ if ask_user_steps_choice == "1":
            print(Fore.MAGENTA + "             - The Detection is a " + str(technique["Detection_Type"])) 
            detection_na = detection_na + 1 
 
+    print("")
+    print("That was " + imported_file)
+    print("There were " )
+    print(Fore.GREEN +  str(detection_technique) + "  Technique Detections")
+    print(Fore.BLUE + str(detection_tactic) + "   Tactic Detections")
+    print(Fore.LIGHTCYAN_EX + str(detection_general) + "   General Detections")
+    print(Fore.YELLOW + str(detection_telemetry) + "   Telemetry Detections")
+    print(Fore.RED + str(detection_none) + "   None Detections")
+    print(Fore.MAGENTA + str(detection_na) + "   NA Detections")
+    exit_prompt = input("Press any Key to exit... ")
+    clear_screen()
+    print("Exiting...")
+    sys.exit(0)
+
 # If user presses "2" continue with Scenario 2
 if ask_user_steps_choice == "2":
+    clear_screen()
     print("Displaying Scenario 2")   
 
     for step in steps_data_scenario2:
@@ -269,8 +244,24 @@ if ask_user_steps_choice == "2":
            print(Fore.MAGENTA + "             - The Detection is a " + str(technique["Detection_Type"]))
            detection_na = detection_na + 1   
 
+    print("")
+    print("That was " + imported_file)
+    print("There were " )
+    print(Fore.GREEN +  str(detection_technique) + "  Technique Detections")
+    print(Fore.BLUE + str(detection_tactic) + "   Tactic Detections")
+    print(Fore.LIGHTCYAN_EX + str(detection_general) + "   General Detections")
+    print(Fore.YELLOW + str(detection_telemetry) + "   Telemetry Detections")
+    print(Fore.RED + str(detection_none) + "   None Detections")
+    print(Fore.MAGENTA + str(detection_na) + "   NA Detections")
+    exit_prompt = input("Press any Key to exit... ")
+    clear_screen()
+    print("Exiting...")
+    sys.exit(0)
+
+
 # If user presses "3" continue with Protection Tests
 if ask_user_steps_choice == "3":
+    clear_screen()
     print("Displaying Protection Tests")   
 
     for protection in protection_tests :
@@ -295,21 +286,20 @@ if ask_user_steps_choice == "3":
            print(Fore.LIGHTBLACK_EX + "             - There is no detection : N/A")  
            protection_na = protection_na + 1
 
-# If user presses anything other than "3" continue with Protection Tests
-if ask_user_steps_choice != "3":
-    print("")
-    print("That was " + imported_file)
-    print("There were " )
-    print(Fore.GREEN +  str(detection_technique) + "  Technique Detections")
-    print(Fore.BLUE + str(detection_tactic) + "   Tactic Detections")
-    print(Fore.LIGHTCYAN_EX + str(detection_general) + "   General Detections")
-    print(Fore.YELLOW + str(detection_telemetry) + "   Telemetry Detections")
-    print(Fore.RED + str(detection_none) + "   None Detections")
-    print(Fore.MAGENTA + str(detection_na) + "   NA Detections")
-else:
-    print("")
-    print("That was " + imported_file)
-    print("There were " )
-    print(Fore.RED +  str(protection_none) + "  Techniques missed")
-    print(Fore.GREEN + str(protection_blocked) + "   Techniques blocked")
-    print(Fore.LIGHTBLACK_EX + str(protection_na) + "   N/A (Already Blocked or not participating in the linux test)")
+        print("")
+        print("That was " + imported_file)
+        print("There were " )
+        print(Fore.RED +  str(protection_none) + "  Techniques missed")
+        print(Fore.GREEN + str(protection_blocked) + "   Techniques blocked")
+        print(Fore.LIGHTBLACK_EX + str(protection_na) + "   N/A (Already Blocked or not participating in the linux test)")
+
+        exit_prompt = input("Press any Key to exit... ")
+        clear_screen()
+        print("Exiting...")
+        sys.exit(0)
+
+# If user presses anything other than "1", "2", or "3", exit
+if ask_user_steps_choice not in ["1", "2", "3"]:
+    clear_screen()
+    print("Invalid Selection. Exiting...")
+    sys.exit(1)
